@@ -82,11 +82,19 @@ r.adicionar(p);
 p.adicionar(r);
 
 	}
-	public static void 	removerParticipanteReuniao(String nome, int id) {
+	public static void 	removerParticipanteReuniao(String nome, int id) throws Exception {
 		nome = nome.trim();
 		Reuniao r = repositorio.localizarReuniao(id);
-		
+		if(r==null)
+			throw new Exception("nao pode adicionar - reuniao inexistente");
+
 		//localizar participante e reuniao no repositorio e removê-lo da reunião
+		Participante p = repositorio.localizarParticipante(nome);
+		if(p==null)
+			  throw new Exception("nao pode adicionar - participante inexistente");
+
+		r.remover(p);
+		p.remover(r);
 		
 		//enviarEmail(emaildestino, assunto, mensagem)
 	}

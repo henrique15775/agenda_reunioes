@@ -149,6 +149,7 @@ p.adicionar(r);
 					Reuniao r = new Reuniao(Integer.parseInt(id), datahora, assunto);
 					for(String n : nomes){
 						Participante p = repositorio.localizarParticipante(n);
+						p.adicionar(r);
 						r.adicionar(p);
 					}
 					repositorio.adicionar(r);		

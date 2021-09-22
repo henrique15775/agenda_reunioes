@@ -39,6 +39,9 @@ public class Participante {
 		this.reunioes.add(r);
 		}	}
 
+	public void remover(Reuniao r) {
+		this.reunioes.remove(r);
+	}
 
 	public String getEmail() {
 		

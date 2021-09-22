@@ -33,6 +33,9 @@ public class Reuniao {
 		return Integer.toString(id);
 	}
 	
+	public void remover(Participante p) {
+		this.participantes.remove(p);
+	}
 	
 
 	public ArrayList<Participante> getParticipantes() {

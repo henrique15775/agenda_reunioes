@@ -36,7 +36,7 @@ public class Repositorio {
 		this.reunioes.remove(r);
 	}
 	public Reuniao localizarReuniao(int id){
-		return this.reunioes.get(id);
+		return this.reunioes.get(id-1);
 	}
 	
 	public ArrayList<Participante> getParticipantes() {

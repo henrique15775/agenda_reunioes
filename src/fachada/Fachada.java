@@ -46,27 +46,48 @@ public class Fachada {
 		email = email.trim();
 		
 		Participante b = new Participante(nome,email);
-		repositorio.adicionar(b);
+		if(repositorio.localizarParticipante(nome) ==  null) {
+			repositorio.adicionar(b);
+		}
+		
 		return b;
 		
 	}
 
 	public static Reuniao criarReuniao (String datahora, String assunto, ArrayList<String> nomes) {
 		assunto = assunto.trim();
-		
+		boolean flag = true;
 		Reuniao a = new Reuniao(repositorio.getTotalReunioes()+1,datahora,assunto);
-		for(String x:nomes) {
-			Participante found = repositorio.localizarParticipante(x);
-			a.adicionar(found);
-			found.adicionar(a);
+		for(Reuniao x: repositorio.getReunioes()) {
+			if(a.getDatahora().equals(x.getDatahora())) {
+				System.out.println("Deu ruimmm");
+				flag = false;
+				break;
+			}
 		}
+		if(flag == true) {
+			if(nomes.size() >= 2) {
+			for(String x:nomes) {
+			Participante found = repositorio.localizarParticipante(x);
+			if(found != null) {
+				a.adicionar(found);
+				found.adicionar(a);
+				repositorio.adicionar(found);
+			}
+			
+		}
+		
 		repositorio.adicionar(a);
+		
+		}
+	
+	}
 		return a;
 	}
 
-
 	public static void 	adicionarParticipanteReuniao(String nome, int id) throws Exception {
 		nome = nome.trim();
+		boolean flag = true;
 		//localizar participante e reuniao no repositorio e adicioná-lo à reunião
 		//enviarEmail(emaildestino, assunto, mensagem)
 
@@ -77,10 +98,17 @@ if(p==null)
 Reuniao r = repositorio.localizarReuniao(id);
 if(r==null)
 	throw new Exception("nao pode adicionar - reuniao inexistente");
-
+for(Reuniao x: p.getReunioes()) {
+	if(x.getDatahora().equals(r.getDatahora())) {
+		System.out.println("DEU RUIMMMM");
+		flag = false;
+		break;
+	}
+}
+if(flag == true) {
 r.adicionar(p);
 p.adicionar(r);
-
+}
 	}
 	public static void 	removerParticipanteReuniao(String nome, int id) throws Exception {
 		nome = nome.trim();
@@ -96,10 +124,21 @@ p.adicionar(r);
 		r.remover(p);
 		p.remover(r);
 		
-		//enviarEmail(emaildestino, assunto, mensagem)
+		//enviarEmail(p.getEmail(), r.getAssunto(), "Você foi removido da reunião de " + r.getDatahora().toString() );
 	}
-	public static void	cancelarReuniao(int id) {
+	public static void	cancelarReuniao(int id) throws Exception {
 		//localizar a reunião no repositório, removê-la de seus participantes e
+		Reuniao r = repositorio.localizarReuniao(id);
+		
+		for(Participante x: r.getParticipantes()) {
+			System.out.println(x.getNome() +"   eeee    "+ x.getEmail());
+				System.out.println("Funfou");
+				
+				x.remover(r);
+			
+		}
+		repositorio.remover(r);
+		
 		//removê-la do repositorio
 		//enviarEmail(emaildestino, assunto, mensagem)
 
@@ -207,7 +246,7 @@ p.adicionar(r);
 	public static void enviarEmail(String emaildestino, String assunto, String mensagem){
 		try {
 			//configurar emails
-			String emailorigem = "meuemail@gmail.com";
+			String emailorigem = "luishenriquecuzaum@gmail.com";
 			String senhaorigem = pegarSenha();
 
 			//Gmail

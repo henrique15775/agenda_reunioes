@@ -40,7 +40,7 @@ public class Repositorio {
 	}
 	
 	public ArrayList<Participante> getParticipantes() {
-		ArrayList<Participante> lista = new ArrayList<Participante>(participantes.values());
+		ArrayList<Participante> lista = new ArrayList<Participante>(this.participantes.values());
 		return lista;
 	}
 	public ArrayList<Reuniao> getReunioes() {

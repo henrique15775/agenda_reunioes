@@ -26,8 +26,20 @@ public class Reuniao {
 	 }
 
 	public void adicionar(Participante p) {
+		/*boolean flag = true;
+		ArrayList<Reuniao> reunioes = p.getReunioes();
+		for(Reuniao x: reunioes) {
+			if(x.getDatahora().isEqual(this.getDatahora())) {
+				System.out.println("DEU RUIIIMM");
+				flag = false;
+				break;
+			}
+		}
+		if(flag == true) {*/
 		this.participantes.add(p);
 	}
+		
+	
 	
 	public String getId() {
 		return Integer.toString(id);

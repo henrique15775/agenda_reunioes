@@ -29,7 +29,7 @@ public class Participante {
 	public void adicionar(Reuniao r) {
 		boolean flag = true;
 		for(Reuniao x: reunioes) {
-			if(x.getDatahora() == r.getDatahora() ) {
+			if(x.getDatahora().isEqual(r.getDatahora())) {
 				System.out.println("DEU RUIIIMM");
 				flag = false;
 				break;

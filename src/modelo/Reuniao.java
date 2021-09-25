@@ -34,9 +34,10 @@ public class Reuniao {
 				flag = false;
 				break;
 			}
-		}
-		if(flag == true) {*/
+		}*/
+		//if(flag == true) {
 		this.participantes.add(p);
+	//}
 	}
 		
 	

@@ -56,32 +56,48 @@ public class Fachada {
 
 	public static Reuniao criarReuniao (String datahora, String assunto, ArrayList<String> nomes) {
 		assunto = assunto.trim();
-		boolean flag = true;
+		//boolean flag = true;
 		Reuniao a = new Reuniao(repositorio.getTotalReunioes()+1,datahora,assunto);
-		for(Reuniao x: repositorio.getReunioes()) {
+		/*for(Reuniao x: repositorio.getReunioes()) {
 			if(a.getDatahora().equals(x.getDatahora())) {
 				System.out.println("Deu ruimmm");
 				flag = false;
 				break;
 			}
-		}
-		if(flag == true) {
-			if(nomes.size() >= 2) {
+		}*/
+		
+		if(nomes.size() >= 2) {
 			for(String x:nomes) {
+				boolean flag = true;
 			Participante found = repositorio.localizarParticipante(x);
-			if(found != null) {
+			
+			if(found != null ) {
+				for(Reuniao y: found.getReunioes()) {
+					if(y.getDatahora().equals(a.getDatahora())) {
+						flag = false;
+						break; 
+					}
+				}
+				if(flag == true) {
 				a.adicionar(found);
 				found.adicionar(a);
-				repositorio.adicionar(found);
+				}
+				//repositorio.adicionar(found);
+				}
 			}
 			
 		}
 		
+		if(a.getParticipantes().size() >= 2) {
+		System.out.println(a.getParticipantes().size());
 		repositorio.adicionar(a);
-		
+		}else {
+			a = null;
 		}
+		
+		
 	
-	}
+		
 		return a;
 	}
 
@@ -124,7 +140,7 @@ p.adicionar(r);
 		r.remover(p);
 		p.remover(r);
 		
-		//enviarEmail(p.getEmail(), r.getAssunto(), "Você foi removido da reunião de " + r.getDatahora().toString() );
+		enviarEmail(p.getEmail(), r.getAssunto(), "Você foi removido da reunião de " + r.getDatahora().toString() );
 	}
 	public static void	cancelarReuniao(int id) throws Exception {
 		//localizar a reunião no repositório, removê-la de seus participantes e

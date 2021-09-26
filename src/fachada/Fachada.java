@@ -206,11 +206,42 @@ if(r==null)
   
  */
 for(Reuniao x: p.getReunioes()) {
+	
+	LocalDate dataToVerify = x.getDatahora().toLocalDate();
+	LocalDate nascimento= dataToVerify;    
+	Period periodo = Period.between(r.getDatahora().toLocalDate(),nascimento);
+	int c = periodo.getYears();
+	int m = periodo.getMonths();
+	int d = periodo.getDays();
+	
+	System.out.println("periodo= "+c+"anos, "+m+"meses, "+d+"dias ");
+	if(d == 0) {
+		System.out.println("\n----Diferença entre horarios");
+		LocalTime meiodia = x.getDatahora().toLocalTime();		//formato default
+								//alternativa
+		Duration dur = Duration.between(r.getDatahora().toLocalTime(),meiodia);
+		long horas = dur.toHours();
+		long minutos = dur.toMinutes();
+		System.out.println("duração em horas=" + horas+"  ou em minutos="+minutos);
+		if((horas < 2 && horas > 0) ||  (horas > -2 && horas < 0)) {
+			flag = false;
+			
+			
+		}
+		
+		
+	}else {
+		continue;
+	}
+	
+	
+	
+	/*
 	if(x.getDatahora().equals(r.getDatahora())) {
 		System.out.println("DEU RUIMMMM");
 		flag = false;
 		break;
-	}
+	}*/
 }
 if(flag == true) {
 r.adicionar(p);

@@ -9,6 +9,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
@@ -68,32 +72,72 @@ public class Fachada {
 		
 		if(nomes.size() >= 2) {
 			for(String x:nomes) {
-				boolean flag = true;
+			boolean flag = true;
 			Participante found = repositorio.localizarParticipante(x);
 			
 			if(found != null ) {
-				for(Reuniao y: found.getReunioes()) {
+				/*for(Reuniao y: found.getReunioes()) {
 					if(y.getDatahora().equals(a.getDatahora())) {
 						flag = false;
 						break; 
+						
 					}
 				}
+				*/
+				
+				for(Reuniao y: found.getReunioes()) {
+					System.out.println("\n----Diferença entre duas datas");
+					LocalDate dataToVerify = a.getDatahora().toLocalDate();
+					LocalDate nascimento= dataToVerify;    
+					Period p = Period.between(y.getDatahora().toLocalDate(),nascimento);
+					int c = p.getYears();
+					int m = p.getMonths();
+					int d = p.getDays();
+					
+					System.out.println("periodo= "+c+"anos, "+m+"meses, "+d+"dias ");
+					if(d == 0) {
+						System.out.println("\n----Diferença entre horarios");
+						LocalTime meiodia = a.getDatahora().toLocalTime();		//formato default
+						//meiodia = LocalTime.of(12,0,0);						//alternativa
+						Duration dur = Duration.between(y.getDatahora().toLocalTime(),meiodia);
+						long horas = dur.toHours();
+						long minutos = dur.toMinutes();
+						System.out.println("duração em horas=" + horas+"  ou em minutos="+minutos);
+						if((horas < 2 && horas > 0) ||  (horas > -2 && horas < 0)) {
+							flag = false;
+							
+							
+						}
+						
+						
+					}else {
+						continue;
+					}
+						
+					
+					
+					
+				}
+				
+				
 				if(flag == true) {
 				a.adicionar(found);
 				found.adicionar(a);
 				}
 				//repositorio.adicionar(found);
 				}
-			}
+			
+			} // for
 			
 		}
 		
 		if(a.getParticipantes().size() >= 2) {
-		System.out.println(a.getParticipantes().size());
+		
 		repositorio.adicionar(a);
 		}else {
 			a = null;
 		}
+		
 		
 		
 	
@@ -114,6 +158,53 @@ if(p==null)
 Reuniao r = repositorio.localizarReuniao(id);
 if(r==null)
 	throw new Exception("nao pode adicionar - reuniao inexistente");
+/*
+ 
+  boolean flag = true;
+			Participante found = repositorio.localizarParticipante(x);
+			
+			if(found != null ) {
+				/*for(Reuniao y: found.getReunioes()) {
+					if(y.getDatahora().equals(a.getDatahora())) {
+						flag = false;
+						break; 
+						
+					}
+				}
+				*/
+				/*
+				for(Reuniao y: found.getReunioes()) {
+					System.out.println("\n----Diferença entre duas datas");
+					LocalDate dataToVerify = a.getDatahora().toLocalDate();
+					LocalDate nascimento= dataToVerify;    
+					Period p = Period.between(y.getDatahora().toLocalDate(),nascimento);
+					int c = p.getYears();
+					int m = p.getMonths();
+					int d = p.getDays();
+					
+					System.out.println("periodo= "+c+"anos, "+m+"meses, "+d+"dias ");
+					if(d == 0) {
+						System.out.println("\n----Diferença entre horarios");
+						LocalTime meiodia = a.getDatahora().toLocalTime();		//formato default
+						//meiodia = LocalTime.of(12,0,0);						//alternativa
+						Duration dur = Duration.between(y.getDatahora().toLocalTime(),meiodia);
+						long horas = dur.toHours();
+						long minutos = dur.toMinutes();
+						System.out.println("duração em horas=" + horas+"  ou em minutos="+minutos);
+						if((horas < 2 && horas > 0) ||  (horas > -2 && horas < 0)) {
+							flag = false;
+							
+							
+						}
+						
+						
+					}else {
+						continue;
+					}
+  
+  
+  
+ */
 for(Reuniao x: p.getReunioes()) {
 	if(x.getDatahora().equals(r.getDatahora())) {
 		System.out.println("DEU RUIMMMM");
@@ -124,6 +215,7 @@ for(Reuniao x: p.getReunioes()) {
 if(flag == true) {
 r.adicionar(p);
 p.adicionar(r);
+//enviarEmail(p.getEmail(),"Reuniao de " + r.getAssunto(),"Você foi inserido na reunião" + r.getAssunto() +" de " + r.getDatahora().toString());
 }
 	}
 	public static void 	removerParticipanteReuniao(String nome, int id) throws Exception {
@@ -140,7 +232,7 @@ p.adicionar(r);
 		r.remover(p);
 		p.remover(r);
 		
-		enviarEmail(p.getEmail(), r.getAssunto(), "Você foi removido da reunião de " + r.getDatahora().toString() );
+		//enviarEmail(p.getEmail(), r.getAssunto(), "Você foi removido da reunião de " + r.getDatahora().toString() );
 	}
 	public static void	cancelarReuniao(int id) throws Exception {
 		//localizar a reunião no repositório, removê-la de seus participantes e

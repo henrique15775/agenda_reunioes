@@ -27,17 +27,17 @@ public class Participante {
 
 
 	public void adicionar(Reuniao r) {
-		boolean flag = true;
+		/*boolean flag = true;
 		for(Reuniao x: reunioes) {
 			if(x.getDatahora().isEqual(r.getDatahora())) {
 				System.out.println("DEU RUIIIMM");
 				flag = false;
 				break;
 			}
-		}
-		if(flag == true) {
+		}*/
+		
 		this.reunioes.add(r);
-		}	}
+			}
 
 	public void remover(Reuniao r) {
 		this.reunioes.remove(r);

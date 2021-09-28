@@ -103,7 +103,7 @@ public class Fachada {
 						long horas = dur.toHours();
 						long minutos = dur.toMinutes();
 						System.out.println("duração em horas=" + horas+"  ou em minutos="+minutos);
-						if((horas < 2 && horas > 0) ||  (horas > -2 && horas < 0)) {
+						if((horas <= 2 && horas >= 0) ||  (horas >= -2 && horas <= 0)) {
 							flag = false;
 							
 							
@@ -223,7 +223,7 @@ for(Reuniao x: p.getReunioes()) {
 		long horas = dur.toHours();
 		long minutos = dur.toMinutes();
 		System.out.println("duração em horas=" + horas+"  ou em minutos="+minutos);
-		if((horas < 2 && horas > 0) ||  (horas > -2 && horas < 0)) {
+		if((horas <= 2 && horas >= 0) ||  (horas >= -2 && horas <= 0)) {
 			flag = false;
 			
 			

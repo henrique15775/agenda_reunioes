@@ -224,7 +224,7 @@ for(Reuniao x: p.getReunioes()) {
 		long horas = dur.toHours();
 		long minutos = dur.toMinutes();
 		System.out.println("duração em horas=" + horas+"  ou em minutos="+minutos);
-		if((minutos < 120 && minutos > 0) ||  (minutos > -120 && minutos < 0)) {
+		if((minutos < 120 && minutos >= 0) ||  (minutos > -120 && minutos <= 0)) {
 			flag = false;
 			
 			

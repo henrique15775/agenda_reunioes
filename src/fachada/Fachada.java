@@ -1,8 +1,8 @@
 package fachada;
 /**********************************
  * IFPB - Curso Superior de Tec. em Sist. para Internet
- * Programa√ß√£o Orientada a Objetos
- * Prof. Fausto Maranh√£o Ayres
+ * ProgramaÁ„o Orientada a Objetos
+ * Prof. Fausto Maranh„o Ayres
  **********************************/
 
 import java.io.File;
@@ -86,7 +86,7 @@ public class Fachada {
 				*/
 				
 				for(Reuniao y: found.getReunioes()) {
-					System.out.println("\n----Diferen√ßa entre duas datas");
+					System.out.println("\n----DiferenÁa entre duas datas");
 					LocalDate dataToVerify = a.getDatahora().toLocalDate();
 					LocalDate nascimento= dataToVerify;    
 					Period p = Period.between(y.getDatahora().toLocalDate(),nascimento);
@@ -96,15 +96,16 @@ public class Fachada {
 					
 					System.out.println("periodo= "+c+"anos, "+m+"meses, "+d+"dias ");
 					if(d == 0) {
-						System.out.println("\n----Diferen√ßa entre horarios");
+						System.out.println("\n----DiferenÁa entre horarios");
 						LocalTime meiodia = a.getDatahora().toLocalTime();		//formato default
 						//meiodia = LocalTime.of(12,0,0);						//alternativa
 						Duration dur = Duration.between(y.getDatahora().toLocalTime(),meiodia);
 						long horas = dur.toHours();
 						long minutos = dur.toMinutes();
-						System.out.println("dura√ß√£o em horas=" + horas+"  ou em minutos="+minutos);
-						if((horas <= 2 && horas >= 0) ||  (horas >= -2 && horas <= 0)) {
-							flag = false;
+						System.out.println("duraÁ„o em horas=" + horas+"  ou em minutos="+minutos);
+						if((minutos < 120 && minutos >= 0) ||  (minutos > -120 && minutos <= 0)) {
+							
+								flag = false;
 							
 							
 						}
@@ -148,7 +149,7 @@ public class Fachada {
 	public static void 	adicionarParticipanteReuniao(String nome, int id) throws Exception {
 		nome = nome.trim();
 		boolean flag = true;
-		//localizar participante e reuniao no repositorio e adicion√°-lo √† reuni√£o
+		//localizar participante e reuniao no repositorio e adicion·-lo ‡ reuni„o
 		//enviarEmail(emaildestino, assunto, mensagem)
 
 Participante p = repositorio.localizarParticipante(nome);
@@ -158,7 +159,53 @@ if(p==null)
 Reuniao r = repositorio.localizarReuniao(id);
 if(r==null)
 	throw new Exception("nao pode adicionar - reuniao inexistente");
-
+/*
+ 
+  boolean flag = true;
+			Participante found = repositorio.localizarParticipante(x);
+			
+			if(found != null ) {
+				/*for(Reuniao y: found.getReunioes()) {
+					if(y.getDatahora().equals(a.getDatahora())) {
+						flag = false;
+						break; 
+						
+					}
+				}
+				*/
+				/*
+				for(Reuniao y: found.getReunioes()) {
+					System.out.println("\n----DiferenÁa entre duas datas");
+					LocalDate dataToVerify = a.getDatahora().toLocalDate();
+					LocalDate nascimento= dataToVerify;    
+					Period p = Period.between(y.getDatahora().toLocalDate(),nascimento);
+					int c = p.getYears();
+					int m = p.getMonths();
+					int d = p.getDays();
+					
+					System.out.println("periodo= "+c+"anos, "+m+"meses, "+d+"dias ");
+					if(d == 0) {
+						System.out.println("\n----DiferenÁa entre horarios");
+						LocalTime meiodia = a.getDatahora().toLocalTime();		//formato default
+						//meiodia = LocalTime.of(12,0,0);						//alternativa
+						Duration dur = Duration.between(y.getDatahora().toLocalTime(),meiodia);
+						long horas = dur.toHours();
+						long minutos = dur.toMinutes();
+						System.out.println("duraÁ„o em horas=" + horas+"  ou em minutos="+minutos);
+						if((horas < 2 && horas > 0) ||  (horas > -2 && horas < 0)) {
+							flag = false;
+							
+							
+						}
+						
+						
+					}else {
+						continue;
+					}
+  
+  
+  
+ */
 for(Reuniao x: p.getReunioes()) {
 	
 	LocalDate dataToVerify = x.getDatahora().toLocalDate();
@@ -170,14 +217,14 @@ for(Reuniao x: p.getReunioes()) {
 	
 	System.out.println("periodo= "+c+"anos, "+m+"meses, "+d+"dias ");
 	if(d == 0) {
-		System.out.println("\n----Diferen√ßa entre horarios");
+		System.out.println("\n----DiferenÁa entre horarios");
 		LocalTime meiodia = x.getDatahora().toLocalTime();		//formato default
 								//alternativa
 		Duration dur = Duration.between(r.getDatahora().toLocalTime(),meiodia);
 		long horas = dur.toHours();
 		long minutos = dur.toMinutes();
-		System.out.println("dura√ß√£o em horas=" + horas+"  ou em minutos="+minutos);
-		if((horas <= 2 && horas >= 0) ||  (horas >= -2 && horas <= 0)) {
+		System.out.println("duraÁ„o em horas=" + horas+"  ou em minutos="+minutos);
+		if((minutos < 120 && minutos > 0) ||  (minutos > -120 && minutos < 0)) {
 			flag = false;
 			
 			
@@ -200,7 +247,7 @@ for(Reuniao x: p.getReunioes()) {
 if(flag == true) {
 r.adicionar(p);
 p.adicionar(r);
-//enviarEmail(p.getEmail(),"Reuniao de " + r.getAssunto(),"Voc√™ foi inserido na reuni√£o" + r.getAssunto() +" de " + r.getDatahora().toString());
+//enviarEmail(p.getEmail(),"Reuniao de " + r.getAssunto(),"VocÍ foi inserido na reuni„o" + r.getAssunto() +" de " + r.getDatahora().toString());
 }
 	}
 	public static void 	removerParticipanteReuniao(String nome, int id) throws Exception {
@@ -209,7 +256,7 @@ p.adicionar(r);
 		if(r==null)
 			throw new Exception("nao pode adicionar - reuniao inexistente");
 
-		//localizar participante e reuniao no repositorio e remov√™-lo da reuni√£o
+		//localizar participante e reuniao no repositorio e removÍ-lo da reuni„o
 		Participante p = repositorio.localizarParticipante(nome);
 		if(p==null)
 			  throw new Exception("nao pode adicionar - participante inexistente");
@@ -217,10 +264,10 @@ p.adicionar(r);
 		r.remover(p);
 		p.remover(r);
 		
-		//enviarEmail(p.getEmail(), r.getAssunto(), "Voc√™ foi removido da reuni√£o de " + r.getDatahora().toString() );
+		//enviarEmail(p.getEmail(), r.getAssunto(), "VocÍ foi removido da reuni„o de " + r.getDatahora().toString() );
 	}
 	public static void	cancelarReuniao(int id) throws Exception {
-		//localizar a reuni√£o no reposit√≥rio, remov√™-la de seus participantes e
+		//localizar a reuni„o no repositÛrio, removÍ-la de seus participantes e
 		Reuniao r = repositorio.localizarReuniao(id);
 		
 		for(Participante x: r.getParticipantes()) {
@@ -232,16 +279,16 @@ p.adicionar(r);
 		}
 		repositorio.remover(r);
 		
-		//remov√™-la do repositorio
+		//removÍ-la do repositorio
 		//enviarEmail(emaildestino, assunto, mensagem)
 
 	}
 
 	public static void	inicializar() throws Exception {
 		//ler dos arquivos textos (formato anexo) os dados dos participantes e 
-		//das reuni√µes e adicion√°-los ao reposit√≥rio
+		//das reuniıes e adicion·-los ao repositÛrio
 		//ler dos arquivos textos (formato anexo) os dados dos participantes e 
-				//das reuni√µes e adicion√°-los ao reposit√≥rio
+				//das reuniıes e adicion·-los ao repositÛrio
 
 				Scanner arquivo1=null;
 				Scanner arquivo2=null;
@@ -291,19 +338,19 @@ p.adicionar(r);
 	}
 	public static void	finalizar() throws Exception {
 		//gravar nos arquivos textos (formato anexo) os dados dos participantes e 
-		//das reuni√µes que est√£o no reposit√≥rio
+		//das reuniıes que est„o no repositÛrio
 
 		FileWriter arquivo1=null;
 		FileWriter arquivo2=null;
 		try{
 			arquivo1 = new FileWriter( new File("participantes.csv") ); 
 		}catch(IOException e){
-			throw new Exception("problema na cria√ß√£o do arquivo de participantes");
+			throw new Exception("problema na criaÁ„o do arquivo de participantes");
 		}
 		try{
 			arquivo2 = new FileWriter( new File("reunioes.csv") ); 
 		}catch(IOException e){
-			throw new Exception("problema na cria√ß√£o do arquivo de reunioes");
+			throw new Exception("problema na criaÁ„o do arquivo de reunioes");
 		}
 
 		for(Participante p : repositorio.getParticipantes()) {
@@ -328,7 +375,7 @@ p.adicionar(r);
 	
 	/**************************************************************
 	 * 
-	 * M√âTODO PARA ENVIAR EMAIL, USANDO UMA CONTA (SMTP) DO GMAIL
+	 * M…TODO PARA ENVIAR EMAIL, USANDO UMA CONTA (SMTP) DO GMAIL
 	 * ELE ABRE UMA JANELA PARA PEDIR A SENHA DO EMAIL DO EMITENTE
 	 * ELE USA A BIBLIOTECA JAVAMAIL 1.6.2
 	 * Lembrar de: 

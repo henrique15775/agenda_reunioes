@@ -9,6 +9,10 @@ import java.time.format.DateTimeFormatter;
  * Prof. Fausto Maranhão Ayres
  **********************************/
 
+/* DUPLA:  LUÍS HENRIQUE FERREIRA FREIRE(20201370005) E CHRISTOPHER SILVA DE SOUSA(20201370024)*/
+
+
+
 public class Reuniao {
 	 private int id;
 	 private LocalDateTime datahora;

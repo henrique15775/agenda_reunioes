@@ -33,6 +33,7 @@ import modelo.Participante;
 import modelo.Reuniao;
 import repositorio.Repositorio;
 
+/* DUPLA:  LUÍS HENRIQUE FERREIRA FREIRE(20201370005) E CHRISTOPHER SILVA DE SOUSA(20201370024)*/
 
 
 public class Fachada {

@@ -14,6 +14,10 @@ import modelo.Participante;
 import modelo.Reuniao;
 
 
+/* DUPLA:  LUÍS HENRIQUE FERREIRA FREIRE(20201370005) E CHRISTOPHER SILVA DE SOUSA(20201370024)*/
+
+
+
 public class Repositorio {
 	private TreeMap<String,Participante> participantes = new TreeMap<>();
 	private ArrayList<Reuniao> reunioes = new ArrayList<>(); 

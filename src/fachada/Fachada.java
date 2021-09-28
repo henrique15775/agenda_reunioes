@@ -61,6 +61,7 @@ public class Fachada {
 	public static Reuniao criarReuniao (String datahora, String assunto, ArrayList<String> nomes) {
 		assunto = assunto.trim();
 		//boolean
+		int num_id = 1;
 		int pos = 1;
 		Reuniao  lastreuniao = null;
 		
@@ -72,8 +73,10 @@ public class Fachada {
 			}
 			pos += 1;
 		}
-		
-		Reuniao a = new Reuniao(Integer.parseInt(lastreuniao.getId()) + 1,datahora,assunto);
+		if(lastreuniao != null) {
+			 num_id = Integer.parseInt(lastreuniao.getId()) + 1;
+		}
+		Reuniao a = new Reuniao(num_id,datahora,assunto);
 		/*for(Reuniao x: repositorio.getReunioes()) {
 			if(a.getDatahora().equals(x.getDatahora())) {
 				System.out.println("Deu ruimmm");

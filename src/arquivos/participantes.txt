@@ -3,3 +3,4 @@ maria;maria@gmail.com
 jose;jose@gmail.com
 ana;ana@gmail.com
 paulo;paulo@gmail.com
+henrique;henrique@gmail.com

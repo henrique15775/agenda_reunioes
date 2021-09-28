@@ -31,12 +31,21 @@ public class Repositorio {
 
 	public void adicionar(Reuniao r){
 		this.reunioes.add(r);
+		
 	}
 	public void remover(Reuniao r){
 		this.reunioes.remove(r);
+		
 	}
 	public Reuniao localizarReuniao(int id){
-		return this.reunioes.get(id-1);
+		Reuniao finded = null;
+		for(Reuniao x : this.reunioes) {
+			if(Integer.parseInt(x.getId()) == id) {
+				finded = x;
+				
+			}
+		}
+		return finded;
 	}
 	
 	public ArrayList<Participante> getParticipantes() {

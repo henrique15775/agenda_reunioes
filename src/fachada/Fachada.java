@@ -60,8 +60,20 @@ public class Fachada {
 
 	public static Reuniao criarReuniao (String datahora, String assunto, ArrayList<String> nomes) {
 		assunto = assunto.trim();
-		//boolean flag = true;
-		Reuniao a = new Reuniao(repositorio.getTotalReunioes()+1,datahora,assunto);
+		//boolean
+		int pos = 1;
+		Reuniao  lastreuniao = null;
+		
+		for(Reuniao tofind:  repositorio.getReunioes()) {
+			
+			if(pos == repositorio.getTotalReunioes()) {
+				lastreuniao = tofind;
+				break;
+			}
+			pos += 1;
+		}
+		
+		Reuniao a = new Reuniao(Integer.parseInt(lastreuniao.getId()) + 1,datahora,assunto);
 		/*for(Reuniao x: repositorio.getReunioes()) {
 			if(a.getDatahora().equals(x.getDatahora())) {
 				System.out.println("Deu ruimmm");
@@ -94,15 +106,14 @@ public class Fachada {
 					int m = p.getMonths();
 					int d = p.getDays();
 					
-					System.out.println("periodo= "+c+"anos, "+m+"meses, "+d+"dias ");
 					if(d == 0) {
-						System.out.println("\n----Diferença entre horarios");
+						
 						LocalTime meiodia = a.getDatahora().toLocalTime();		//formato default
 						//meiodia = LocalTime.of(12,0,0);						//alternativa
 						Duration dur = Duration.between(y.getDatahora().toLocalTime(),meiodia);
 						long horas = dur.toHours();
 						long minutos = dur.toMinutes();
-						System.out.println("duração em horas=" + horas+"  ou em minutos="+minutos);
+						
 						if((minutos < 120 && minutos >= 0) ||  (minutos > -120 && minutos <= 0)) {
 							
 								flag = false;
@@ -159,53 +170,7 @@ if(p==null)
 Reuniao r = repositorio.localizarReuniao(id);
 if(r==null)
 	throw new Exception("nao pode adicionar - reuniao inexistente");
-/*
- 
-  boolean flag = true;
-			Participante found = repositorio.localizarParticipante(x);
-			
-			if(found != null ) {
-				/*for(Reuniao y: found.getReunioes()) {
-					if(y.getDatahora().equals(a.getDatahora())) {
-						flag = false;
-						break; 
-						
-					}
-				}
-				*/
-				/*
-				for(Reuniao y: found.getReunioes()) {
-					System.out.println("\n----Diferença entre duas datas");
-					LocalDate dataToVerify = a.getDatahora().toLocalDate();
-					LocalDate nascimento= dataToVerify;    
-					Period p = Period.between(y.getDatahora().toLocalDate(),nascimento);
-					int c = p.getYears();
-					int m = p.getMonths();
-					int d = p.getDays();
-					
-					System.out.println("periodo= "+c+"anos, "+m+"meses, "+d+"dias ");
-					if(d == 0) {
-						System.out.println("\n----Diferença entre horarios");
-						LocalTime meiodia = a.getDatahora().toLocalTime();		//formato default
-						//meiodia = LocalTime.of(12,0,0);						//alternativa
-						Duration dur = Duration.between(y.getDatahora().toLocalTime(),meiodia);
-						long horas = dur.toHours();
-						long minutos = dur.toMinutes();
-						System.out.println("duração em horas=" + horas+"  ou em minutos="+minutos);
-						if((horas < 2 && horas > 0) ||  (horas > -2 && horas < 0)) {
-							flag = false;
-							
-							
-						}
-						
-						
-					}else {
-						continue;
-					}
-  
-  
-  
- */
+
 for(Reuniao x: p.getReunioes()) {
 	
 	LocalDate dataToVerify = x.getDatahora().toLocalDate();
@@ -260,10 +225,12 @@ p.adicionar(r);
 		Participante p = repositorio.localizarParticipante(nome);
 		if(p==null)
 			  throw new Exception("nao pode adicionar - participante inexistente");
-
+		
 		r.remover(p);
 		p.remover(r);
-		
+		if(r.getParticipantes().size()  < 2) {
+			cancelarReuniao(Integer.parseInt(r.getId()));
+		}
 		//enviarEmail(p.getEmail(), r.getAssunto(), "Você foi removido da reunião de " + r.getDatahora().toString() );
 	}
 	public static void	cancelarReuniao(int id) throws Exception {
@@ -271,8 +238,7 @@ p.adicionar(r);
 		Reuniao r = repositorio.localizarReuniao(id);
 		
 		for(Participante x: r.getParticipantes()) {
-			System.out.println(x.getNome() +"   eeee    "+ x.getEmail());
-				System.out.println("Funfou");
+			
 				
 				x.remover(r);
 			

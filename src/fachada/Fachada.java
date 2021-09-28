@@ -109,7 +109,7 @@ public class Fachada {
 					int m = p.getMonths();
 					int d = p.getDays();
 					
-					if(d == 0) {
+						if(d == 0 && m == 0 && c == 0) {
 						
 						LocalTime meiodia = a.getDatahora().toLocalTime();		//formato default
 						//meiodia = LocalTime.of(12,0,0);						//alternativa
@@ -123,11 +123,11 @@ public class Fachada {
 							
 							
 						}
+						}else {
+							continue;
+						}
 						
-						
-					}else {
-						continue;
-					}
+					
 						
 					
 					
@@ -184,7 +184,7 @@ for(Reuniao x: p.getReunioes()) {
 	int d = periodo.getDays();
 	
 	System.out.println("periodo= "+c+"anos, "+m+"meses, "+d+"dias ");
-	if(d == 0) {
+	if(d == 0 && m == 0 && c == 0) {
 		System.out.println("\n----Diferença entre horarios");
 		LocalTime meiodia = x.getDatahora().toLocalTime();		//formato default
 								//alternativa

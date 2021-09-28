@@ -86,19 +86,14 @@ public class Fachada {
 		}*/
 		
 		if(nomes.size() >= 2) {
+			
 			for(String x:nomes) {
+				
 			boolean flag = true;
 			Participante found = repositorio.localizarParticipante(x);
 			
 			if(found != null ) {
-				/*for(Reuniao y: found.getReunioes()) {
-					if(y.getDatahora().equals(a.getDatahora())) {
-						flag = false;
-						break; 
-						
-					}
-				}
-				*/
+				
 				
 				for(Reuniao y: found.getReunioes()) {
 					System.out.println("\n----Diferença entre duas datas");
@@ -138,6 +133,7 @@ public class Fachada {
 				if(flag == true) {
 				a.adicionar(found);
 				found.adicionar(a);
+				enviarEmail(found.getEmail(),"Reuniao de " + a.getAssunto(),"Você foi inserido na reunião" + a.getAssunto() +" de " + a.getDatahora().toString());
 				}
 				//repositorio.adicionar(found);
 				}
@@ -203,19 +199,11 @@ for(Reuniao x: p.getReunioes()) {
 		continue;
 	}
 	
-	
-	
-	/*
-	if(x.getDatahora().equals(r.getDatahora())) {
-		System.out.println("DEU RUIMMMM");
-		flag = false;
-		break;
-	}*/
 }
 if(flag == true) {
 r.adicionar(p);
 p.adicionar(r);
-//enviarEmail(p.getEmail(),"Reuniao de " + r.getAssunto(),"Você foi inserido na reunião" + r.getAssunto() +" de " + r.getDatahora().toString());
+enviarEmail(p.getEmail(),"Reuniao de " + r.getAssunto(),"Você foi inserido na reunião" + r.getAssunto() +" de " + r.getDatahora().toString());
 }
 	}
 	public static void 	removerParticipanteReuniao(String nome, int id) throws Exception {
@@ -234,7 +222,7 @@ p.adicionar(r);
 		if(r.getParticipantes().size()  < 2) {
 			cancelarReuniao(Integer.parseInt(r.getId()));
 		}
-		//enviarEmail(p.getEmail(), r.getAssunto(), "Você foi removido da reunião de " + r.getDatahora().toString() );
+		enviarEmail(p.getEmail(), r.getAssunto(), "Você foi removido da reunião de " + r.getDatahora().toString() );
 	}
 	public static void	cancelarReuniao(int id) throws Exception {
 		//localizar a reunião no repositório, removê-la de seus participantes e
@@ -244,6 +232,7 @@ p.adicionar(r);
 			
 				
 				x.remover(r);
+				enviarEmail(x.getEmail(), r.getAssunto(), "Você foi removido da reunião de " + r.getDatahora().toString() + " MOTIVO: FOI CANCELADA!" );
 			
 		}
 		repositorio.remover(r);
